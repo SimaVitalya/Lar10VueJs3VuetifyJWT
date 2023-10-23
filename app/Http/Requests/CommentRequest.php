@@ -25,7 +25,6 @@ class CommentRequest extends FormRequest
     {
         return [
             'message' => 'required|string',
-            'rating' => 'nullable|integer|min:1|max:5',
         ];
     }
 }

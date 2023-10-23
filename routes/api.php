@@ -32,10 +32,10 @@ Route::group([
     Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout']);
     Route::post('/refresh', [\App\Http\Controllers\AuthController::class, 'refresh']);
     Route::post('/me', [\App\Http\Controllers\AuthController::class, 'me']);
-    Route::group(['middleware' => 'jwt.auth'], function () {
-        Route::get('/comments', [\App\Http\Controllers\CommentController::class, 'index']);
+    // Route::group(['middleware' => 'jwt.auth'], function () {
+    //     Route::get('/comments', [\App\Http\Controllers\CommentController::class, 'index']);
 
-    });
+    // });если нужно скрыть он неавторизированных польховатеей
 
 
 
@@ -44,8 +44,9 @@ Route::group(['namespace' => 'User', 'prefix' => 'users'], function () {
     Route::post('/', [GetController::class, 'index']);
 
 });
-//Route::get('/comments', [\App\Http\Controllers\CommentController::class, 'index']);
+Route::get('/comments', [\App\Http\Controllers\CommentController::class, 'index']);
+Route::post('/comments', [\App\Http\Controllers\CommentController::class, 'store']);
+Route::post('/comments{commentId}/replies', [\App\Http\Controllers\CommentController::class, 'storeReply']);
+Route::get('/api/comments/sorted', 'CommentController@sorted');
 
 
-//Route::get('/allComments/{id}', [ProductsController::class, 'allComments']);
-//Route::post('/product/{productId}/comments', [ProductsController::class, 'storeComment']);
