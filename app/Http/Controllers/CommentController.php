@@ -18,7 +18,17 @@ class CommentController extends Controller
     public function index()
     {
         // $comments = Comments::get();
-        $comments = Comments::with('user')->get(); // Загружаем связанную модель пользователя
+        $comments = Comments::with('user')->get();
+
+        // Загружаем связанную модель пользователя
+        return response()->json($comments);
+    }
+    public function Reply()
+    {
+        // $comments = Comments::get();
+        $comments = Reply::with('user')->get();
+
+        // Загружаем связанную модель пользователя
         return response()->json($comments);
     }
 
@@ -43,20 +53,21 @@ class CommentController extends Controller
         return response()->json($comment, 201);
     }
 
-    public function storeReply(Request $request, $commentId)
+    public function storeReply(Request $request, $comment_id)
     {
         $validatedData = $request->validate([
             'content' => 'required|string',
         ]);
         $user = JWTAuth::user();
 
-        $comment = Comments::findOrFail($commentId);
 
-        $reply = new Reply($validatedData);
-        $reply->user_id = $user->id;
-        $comment->replies()->save($reply);
+        $reply = new Reply();
+        $reply->content = $validatedData['content']; // Используйте валидированные данные для контента
+        $reply->user_id = $user->id; // Используйте ID пользователя из JWTAuth
+        $reply->comment_id = $comment_id; // Установите значение comment_id из найденного комментария
+        $reply->load('user'); // Загружаем связанную модель пользователя
 
-        $reply->load('user');
+        $reply->save(); // Сохраните модель Reply
 
         return response()->json($reply, 201);
     }

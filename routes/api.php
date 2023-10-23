@@ -45,8 +45,9 @@ Route::group(['namespace' => 'User', 'prefix' => 'users'], function () {
 
 });
 Route::get('/comments', [\App\Http\Controllers\CommentController::class, 'index']);
+Route::get('/reply', [\App\Http\Controllers\CommentController::class, 'Reply']);
 Route::post('/comments', [\App\Http\Controllers\CommentController::class, 'store']);
-Route::post('/comments{commentId}/replies', [\App\Http\Controllers\CommentController::class, 'storeReply']);
+Route::post('/comments/{comment}/replies', [\App\Http\Controllers\CommentController::class, 'storeReply']);
 Route::get('/api/comments/sorted', 'CommentController@sorted');
 
 
