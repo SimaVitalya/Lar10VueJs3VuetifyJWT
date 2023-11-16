@@ -22,6 +22,19 @@ use Illuminate\Support\Facades\Route;
 //Route::middleware('auth:sanctum')->group(function () {
 //    Route::get('/get', [GetController::class, 'index']);
 //});
+
+
+Route::get('/post', [\App\Http\Controllers\PostController::class, 'index']);
+Route::post('/post', [\App\Http\Controllers\PostController::class, 'index']);
+Route::post('/post/store', [\App\Http\Controllers\PostController::class, 'store']);
+Route::put('/post/update/{id}', [\App\Http\Controllers\PostController::class, 'update']);
+Route::delete('/post/delete/{id}', [\App\Http\Controllers\PostController::class, 'destroy']);
+
+
+Route::get('/parse',[\App\Http\Controllers\ParseController::class,'index']);
+
+
+
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
@@ -38,16 +51,11 @@ Route::group([
     // });если нужно скрыть он неавторизированных польховатеей
 
 
-
 });
 Route::group(['namespace' => 'User', 'prefix' => 'users'], function () {
     Route::post('/', [GetController::class, 'index']);
 
 });
-Route::get('/comments', [\App\Http\Controllers\CommentController::class, 'index']);
-Route::get('/reply', [\App\Http\Controllers\CommentController::class, 'Reply']);
-Route::post('/comments', [\App\Http\Controllers\CommentController::class, 'store']);
-Route::post('/comments/{comment}/replies', [\App\Http\Controllers\CommentController::class, 'storeReply']);
-Route::get('/api/comments/sorted', 'CommentController@sorted');
+
 
 

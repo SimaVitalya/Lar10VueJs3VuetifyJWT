@@ -8,13 +8,17 @@
             to="/"
         >Главная
         </router-link>
+
       </li>
       <li class="nav-item">
         <router-link
+            v-if="accessToken"
+            aria-current="page"
             class="nav-link"
-            to="/comment"
-        >Comment
+            to="/post"
+        >Post
         </router-link>
+
       </li>
       <li class="nav-item">
         <router-link
